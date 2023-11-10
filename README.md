@@ -19,3 +19,8 @@ The script `plot_a_generated_protocol.m` will plot a given protocol (based on fi
 
 The python script `for_nanion_data_export/gary2txt.py` will add the final 'reversal ramp' portions of the protocol, then it creates a text file that can be read by [txt2eph.py](https://github.com/CardiacModelling/nanion-data-export/blob/master/txt2eph.py) for conversion to Nanion .eph format. 
 
+## TODO!
+
+Before public release!
+
+The cmaes.m that is included here is under a copyleft GPL licence, so we can't licence all this as BSD as usual. We should probably just make this project a GPL licence too (can't see it wanting to be commercialised). Alternatively we keep our licence and tell people they have to go and download the cmaes.m separately as a prerequisite, but that's annoying.
