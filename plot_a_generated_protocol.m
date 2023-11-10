@@ -9,16 +9,16 @@ load('each_cell_params.mat')
 Model_Params = each_cell_params(:,5); % Cell 5
 
 % The standard steps at the beginning defined to interpolate:
-start_clamp = [ 0 -80 
- 250 -80.0	 
- 250.00001 -120
- 300 -120
- 700 -80
- 900 -80
-900.0001 40
-1900 40
-1900.0001 -120 
-2400 -120 ];
+start_clamp = [ 0 -80
+    250 -80.0
+    250.00001 -120
+    300 -120
+    700 -80
+    900 -80
+    900.0001 40
+    1900 40
+    1900.0001 -120
+    2400 -120 ];
 
 
 full_clamp = start_clamp;
@@ -80,4 +80,9 @@ plot3(a,r,V,'b-','LineWidth',2)
 xlabel('activation a')
 ylabel('recovery r')
 zlabel('Voltage (mV)')
-   
+
+N_boxes = 6;
+box_hits = zeros(N_boxes,N_boxes,N_boxes);
+box_hits = update_box_hits(box_hits, t, y, V);
+total_hits = sum(sum(sum(box_hits>1)));
+fprintf('This protocol hits %i/(%i^3) boxes (%.1f%%).\n',total_hits,N_boxes,100*total_hits/(N_boxes^3))

@@ -2,7 +2,7 @@ close all
 clear all
 
 load('each_cell_params.mat')
-Model_Params = each_cell_params(:,5); % Cell 5
+Model_Params = each_cell_params(:,5); % Loads up Beattie et al. (2018) Cell #5 parameters.
 Protocol_Params = [54, 26, 10, 0.007/(2*pi), 0.037/(2*pi), 0.19/(2*pi)];
 
 y0 = [0.00017    0.601]; % ICs = Steady state for -80mV
@@ -20,9 +20,8 @@ r = y(:,2);
 N_boxes = 6;
 box_hits = zeros(N_boxes,N_boxes,N_boxes);
 box_hits = update_box_hits(box_hits, t, y, V);
-
 total_hits = sum(sum(sum(box_hits>1)));
-fprintf('The sine wave protocol hits %i/%i boxes\n',total_hits,N_boxes^3)
+fprintf('The sine wave protocol hits %i/%i boxes (%.1f%%).\n',total_hits,N_boxes^3,100*total_hits/(N_boxes^3))
 
 figure
 subplot(4,1,1)
