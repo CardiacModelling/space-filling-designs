@@ -52,7 +52,7 @@ options = odeset;
 
 V = interp1(full_clamp(:,1),full_clamp(:,2),t,'linear',-80);
 
-figure(1)
+figure
 subplot(4,1,1)
 plot(t,V,'k-','LineWidth',1.5);
 subplot(4,1,2)
@@ -69,7 +69,7 @@ hold on
 plot(t,IKr,'b-','LineWidth',1.5)
 hold off
 xlabel('Time (ms)')
-ylabel('g*O*(V-E_K)')
+ylabel('IKr')
 
 % Phase plots
 a = y(:,1);
@@ -80,7 +80,7 @@ plot(a,r,'b-','LineWidth',1.5)
 xlabel('activation a')
 ylabel('recovery r')
 
-figure(2)
+figure
 plot3(a,r,V,'b-','LineWidth',2)
     xlim([0 1])
     ylim([0 1])
