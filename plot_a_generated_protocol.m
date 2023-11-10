@@ -1,8 +1,13 @@
-close all
-clear all
+function [total_hits] = plot_a_generated_protocol(filename)
+% PlotAGeneratedProtocol This gives a slightly different (lower) number of 
+% boxes because it outputs just before each step, and then 1ms after, as 
+% opposed to the design script which includes the step itself. This one, 
+% missing 1ms after the steps is probably a more realistic interpretation 
+% of what you might be able to measure (in fact, we probably want to chop 
+% out a whole 5ms and re-examine as usual to account for capacitive spikes).
 
 % Protocol to plot
-clamps = load('resulting_designs_2019/2019-05-20-07-30_Space_Filling_Params_-191710.txt');
+clamps = load(filename);
 
 % Model parameters
 load('each_cell_params.mat')
@@ -77,9 +82,13 @@ ylabel('recovery r')
 
 figure(2)
 plot3(a,r,V,'b-','LineWidth',2)
-xlabel('activation a')
-ylabel('recovery r')
-zlabel('Voltage (mV)')
+    xlim([0 1])
+    ylim([0 1])
+    zlim([-120 60])
+    xlabel('Activation, $a$ gate','interpreter','latex')
+    ylabel('Recovery, $r$ gate','interpreter','latex')
+    zlabel('Voltage (mV)','interpreter','latex')
+    zticks([-120 -90 -60 -30 0 30 60])
 
 N_boxes = 6;
 box_hits = zeros(N_boxes,N_boxes,N_boxes);

@@ -4,7 +4,7 @@ clear all
 % Parameters to tweak
 N_boxes = 6; % in each dimension.u
 N_steps = 17; % sets of 3 steps...
-optimise = true; % Brute force sweep if false.
+optimise = false; % Brute force sweep if false.
 
 %
 load('each_cell_params.mat')
@@ -116,7 +116,8 @@ for step_n = 1:N_steps
         Step_Params(3) = ceil(Step_Params(3));
         Step_Params(5) = ceil(Step_Params(5));
     else
-        Step_Params = manual_sweep(ICs, box_hits, Model_Params);
+        Step_Params, score = manual_sweep(ICs, box_hits, Model_Params);
+        total_score = total_score+score;
     end
     
     if (Step_Params(1) < 10 || Step_Params(3) < 10 || Step_Params(5) < 10)
@@ -208,5 +209,5 @@ Filename = sprintf('%s_%i_box_%i_step_Space_Filling_Params_%g.txt', datestr(now,
 save(Filename,'All_Params','-ascii')
 
 total_hits = sum(sum(sum(box_hits>1)));
-fprintf('Design %s is complete.\nIt visited %i/%i boxes (%.1f%%) and got a total score of %f', Filename, total_hits, N_boxes^3, 100*total_hits/(N_boxes^3),total_score)
+fprintf('Design %s is complete.\nIt visited %i/%i boxes (%.1f%%) and got a total score of %f\n', Filename, total_hits, N_boxes^3, 100*total_hits/(N_boxes^3),total_score)
 
