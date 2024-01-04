@@ -55,6 +55,7 @@ r = y(:,2);
 V = interp1(full_clamp(:,1),full_clamp(:,2),t,'linear',-80);
 
 colours = parula(length(t));
+set(groot,'defaultAxesTickLabelInterpreter','latex'); 
 
 figure
 subplot(4,1,1)
@@ -65,7 +66,8 @@ end
 ylabel('Voltage (mV)','interpreter','latex')
 set(gca,'FontSize',14,'Box','on')
 set(gca, 'XTickLabel', [])
-ylim([-130 45])
+yticks([-120:40:40])
+ylim([-130 50])
 xlim([0 2400])
 
 subplot(4,1,2)
@@ -100,18 +102,8 @@ set(gca,'FontSize',14,'Box','on')
 ylabel('IKr (nA)','interpreter','latex')
 ylim([-3.5 0.5])
 xlim([0 2400])
-% Phase plots
-a = y(:,1);
-r = y(:,2);
 
-% subplot(5,1,5)
-% hold all
-% for t_idx = 2:length(t)
-%     plot([a(t_idx-1) a(t_idx)],[r(t_idx-1) r(t_idx)],'-','Color',colours(t_idx,:),'LineWidth',1.5)
-% end
-% xlabel('Activation, $a$ gate','interpreter','latex')
-% ylabel('Recovery, $r$ gate','interpreter','latex')
-% set(gca,'FontSize',14,'Box','on')
+
 set(gcf,'Renderer','Painter')
 %exportgraphics(gcf,'for_writeup/state_occupancy_initial_steps.pdf');
 
@@ -119,15 +111,21 @@ set(gcf,'Renderer','Painter')
 figure
 hold all
 for t_idx = 2:length(t)
-    plot3([a(t_idx-1) a(t_idx)],[r(t_idx-1) r(t_idx)],[V(t_idx-1) V(t_idx)],'-','Color',colours(t_idx,:),'LineWidth',2)
+    plot3([a(t_idx-1) a(t_idx)],[r(t_idx-1) r(t_idx)],[V(t_idx-1) V(t_idx)],'-','Color',colours(t_idx,:),'LineWidth',2);
 end
 xlim([0 1])
 ylim([0 1])
 zlim([-120 60])
-xlabel('Activation, $a$ gate','interpreter','latex')
-ylabel('Recovery, $r$ gate','interpreter','latex')
-zlabel('Voltage (mV)','interpreter','latex')
+xlabel('Activation, $a$ gate','interpreter','latex','FontSize',16)
+ylabel('Recovery, $r$ gate','interpreter','latex','FontSize',16)
+zlabel('Voltage (mV)','interpreter','latex','FontSize',16)
 zticks([-120 -90 -60 -30 0 30 60])
+xticks([0:6]./6)
+yticks([0:6]./6)
+xticklabels({"0", "1/6", "2/6", "3/6", "4/6", "5/6", "1"})
+yticklabels({"0", "1/6", "2/6", "3/6", "4/6", "5/6", "1"})
+set(gca,'FontSize',14,'Box','on')
+
 
 N_boxes = 6;
 box_hits = zeros(N_boxes,N_boxes,N_boxes);
