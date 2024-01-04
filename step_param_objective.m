@@ -9,7 +9,6 @@ function [score] = step_param_objective(params,ICs,box_hits,Model_Params,printin
 
     if printing; fprintf('Trying: V=%5.4g, %5.4g, %5.4g mV for %g, %g, %g ms. ',params(2),params(4),params(6), params(1), params(3),params(5)); end
 
-    original_box_hits = box_hits;
     empty_original_boxes = length(find(box_hits()==0));
 
     % Heavy penalty for steps that are out of voltage range...
