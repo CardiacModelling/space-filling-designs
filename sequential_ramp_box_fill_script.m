@@ -4,10 +4,10 @@ clear all
 % Parameters to tweak
 % This is a copy-n-paste of the step one to do a step-ramp-step protocol.
 N_boxes = 6; % in each dimension.u
-N_steps = 17; % sets of 3 steps...
+N_steps = 12; % sets of 5 steps...
 optimise = true; % Brute force sweep if false.
 print_lots = false; % Display output of every objective call
-num_to_generate = 1;
+num_to_generate = 20;
 
 %
 load('each_cell_params.mat')
@@ -89,9 +89,9 @@ for z = 1:num_to_generate
     ICs = y(end,:);
     
     % For initial ramp guesses - [duration1, v1, duration2, duration3, v3].
-    lower_bounds = [20; -120; 20; 20; -120];
-    ranges = [980;180;980;980;180];
-    sigma_guess = [100;20;100;100;20];
+    lower_bounds = [20; -120; 20; 20; -120; 20; 20; -120];
+    ranges = [980;180;980;980;180; 980; 980; 180];
+    sigma_guess = [100;20;100;100;20;100;100;20];
     cmaes_options = cmaes('defaults');
     cmaes_options.TolX = 2;
     
@@ -137,12 +137,14 @@ for z = 1:num_to_generate
             Step_Params(1) = ceil(Step_Params(1)); % round to nearest ms
             Step_Params(3) = ceil(Step_Params(3));
             Step_Params(4) = ceil(Step_Params(4));
+            Step_Params(6) = ceil(Step_Params(6));
+            Step_Params(7) = ceil(Step_Params(7));
         else
             Step_Params, score = manual_sweep(ICs, box_hits, Model_Params);
             total_score = total_score+score;
         end
         
-        if (Step_Params(1) < 10 || Step_Params(3) < 10 || Step_Params(4) < 10)
+        if (Step_Params(1) < 10 || Step_Params(3) < 10 || Step_Params(4) < 10 || Step_Params(6) < 10 || Step_Params(7) < 10)
             error('steps too small') % sanity check - shouldn't ever throw
         end
         
@@ -157,15 +159,20 @@ for z = 1:num_to_generate
         empty_original_boxes = length(find(old_hits()==0));
         empty_boxes_now = length(find(box_hits()==0));
         number_new_boxes = empty_original_boxes - empty_boxes_now;
-        fprintf("\n 3 ramp design complete, it added %i new boxes.\n\n",number_new_boxes)
+        fprintf("\n 3step 2ramp design complete, it added %i new boxes.\n\n",number_new_boxes)
     
         % Store end state
         ICs = y_run(end,:);
         
-        % Append the parameters for these 3 steps to the end of the step collection
-        All_Params = [All_Params; Step_Params(1) Step_Params(2); Step_Params(3) NaN; Step_Params(4) Step_Params(5)];
+        % Append the parameters for these 5 steps to the end of the step collection
+        All_Params = [All_Params; ...
+            Step_Params(1) Step_Params(2); ...
+            Step_Params(3) NaN;... % ramp
+            Step_Params(4) Step_Params(5); ...
+            Step_Params(6) NaN;... % ramp
+            Step_Params(7) Step_Params(8)];
         
-        % Append the variables for these 3 steps to the previous ones
+        % Append the variables for these steps to the previous ones
         t = [t; t_run+t(end)];
         y = [y; y_run];
         V = [V; V_run];
@@ -173,7 +180,7 @@ for z = 1:num_to_generate
         r = y(:,2);
         
         
-        % Plot in loop to highlight new 3 steps
+        % Plot in loop to highlight new steps
         set(0, 'CurrentFigure', fig1)
         subplot(4,1,1)
         plot(t, V,'k-','LineWidth',2)
@@ -234,9 +241,8 @@ for z = 1:num_to_generate
     All_Params
     total_hits = sum(sum(sum(box_hits>1)));
 
-    Filename = sprintf('%s_%i_box_%i_step_Space_Filling_Params_%g_%g.txt', datestr(now,'yyyy-mm-dd-HH-MM'),N_boxes, N_steps, total_hits, total_score)
+    Filename = sprintf('%s_%i_box_%i_step_Space_Filling_Params_%g_%g', datestr(now,'yyyy-mm-dd-HH-MM'),N_boxes, N_steps, total_hits, total_score)
     fprintf('Design %s is complete.\nIt visited %i/%i boxes (%.1f%%) and got a total score of %f\n', Filename, total_hits, N_boxes^3, 100*total_hits/(N_boxes^3),total_score)
-    save(Filename,'All_Params','-ascii')
-
+    save([Filename '.txt'],'All_Params','-ascii')
 end
 
