@@ -6,7 +6,7 @@ N_boxes = 6; % in each dimension.u
 N_steps = 17; % sets of 3 steps...
 optimise = true; % Brute force sweep if false.
 print_lots = false; % Display output of every objective call
-num_to_generate = 20;
+num_to_generate = 100;
 
 %
 load('each_cell_params.mat')
@@ -88,8 +88,8 @@ for z = 1:num_to_generate
     ICs = y(end,:);
     
     % For initial guesses - [duration1, v1, duration2, v2, duration3, v3].
-    lower_bounds = [30; -120; 30; -120; 30; -120];
-    ranges = [1000;180;1000;180;1000;180];
+    lower_bounds = [20; -120; 20; -120; 20; -120];
+    ranges = [980;180;980;180;980;180];
     sigma_guess = [100;20;100;20;100;20];
     cmaes_options = cmaes('defaults');
     cmaes_options.TolX = 2;

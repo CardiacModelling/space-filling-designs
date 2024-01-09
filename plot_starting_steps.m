@@ -16,13 +16,13 @@ Model_Params = each_cell_params(:,5); % Cell 5
 % The standard steps at the beginning defined to interpolate:
 start_clamp = [ 0 -80
     250 -80.0
-    250.00001 -120
+    250 -120
     300 -120
     700 -80
     900 -80
-    900.0001 40
+    900 40
     1900 40
-    1900.0001 -120
+    1900 -120
     2400 -120 ];
 
 
@@ -40,19 +40,19 @@ for i=1:length(clamps)
         continue
     end
     
-    start_point = [last_time+0.00001 clamps(i,2)];
+    start_point = [last_time clamps(i,2)];
     end_point = [last_time+clamps(i,1) clamps(i,2)];
     full_clamp = [full_clamp; start_point; end_point];
     next_time_add = 0;
 end
 
-options = odeset;
-[t,y]=ode15s(@model,[0:full_clamp(end,1)],y,options,full_clamp,Model_Params);
+options = odeset('AbsTol',1e-8,'RelTol',1e-8);
+[t,y]=ode15s(@model,[0 full_clamp(end,1)],y,options,full_clamp,Model_Params);
 % Phase plots
 a = y(:,1);
 r = y(:,2);
 
-V = interp1(full_clamp(:,1),full_clamp(:,2),t,'linear',-80);
+V = getVoltage(t,full_clamp);
 
 colours = parula(length(t));
 set(groot,'defaultAxesTickLabelInterpreter','latex'); 
