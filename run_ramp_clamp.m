@@ -19,5 +19,5 @@ clamp = [0 V_step1
          duration1+duration2+duration3+duration4+duration5 V_step5];
 
 options = odeset;
-[t,states] = ode15s(@model,0:1:clamp(end,1),y0,options,clamp, Model_Params, Protocol_Params);
+[t,states] = ode15s(@model,[0 clamp(end,1)],y0,options,clamp, Model_Params, Protocol_Params);
 V = interp1(clamp(:,1),clamp(:,2),t,'linear');

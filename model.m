@@ -8,8 +8,7 @@ end
 if (length(clamp)==1)   
     V = sine_wave(t,C);
 else
-	% Interpolate V at this time
-	V = interp1(clamp(:,1),clamp(:,2),t,'linear',clamp(1,2));
+    V = getVoltage(t,clamp);
 end
 
 k1 = P(1).*exp(P(2).*V);
