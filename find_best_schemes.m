@@ -17,7 +17,7 @@ for i = 1:length(listing)
     if listing(i).name(1) == '.'
         continue
     end
-    if listing(i).name(end-3:end) == ".fig"
+    if listing(i).name(end-3:end) ~= ".txt"
         continue
     end
 
