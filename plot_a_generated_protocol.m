@@ -44,7 +44,6 @@ function [total_hits, total_duration] = plot_a_generated_protocol(filename, vara
         last_time = full_clamp(end,1)+next_time_add;
         if isnan(clamps(i,2))
             % This is the way we do ramps, works fine!
-            %disp(['Found a Nan on line ' num2str(i)])
             next_time_add = clamps(i,1);
             continue
         end

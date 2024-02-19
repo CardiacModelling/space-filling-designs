@@ -26,6 +26,7 @@ for i = 1:length(listing)
     names{counter} = listing(i).name;
     counter = counter + 1;
     title(listing(i).name,'Interpreter','none')
+    close all
 end
 
 figure
@@ -44,5 +45,13 @@ scatter(100.*scores/6^3, durations./1000)
 xlabel('Percentage of Boxes visited')
 ylabel('Duration of Protocol (s)')
 
-[best_score idx] = max(scores)
+[s,ordering] = sort(scores);
+best_score = s(end)
+idx = ordering(end)
+[best_score idx] = max(scores);
 fprintf("Best protocol is %s which visits %i boxes.\n",names{idx}, best_score)
+
+% These are the best 10 protocols:
+for i=length(ordering):-1:length(ordering)-10
+    plot_a_generated_protocol([results_dir filesep names{ordering(i)}]);
+end

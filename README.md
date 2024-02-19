@@ -19,6 +19,11 @@ The script `plot_a_generated_protocol.m` will plot a given protocol (based on fi
 
 The python script `for_nanion_data_export/gary2txt.py` will add the final 'reversal ramp' portions of the protocol, then it creates a text file that can be read by [txt2eph.py](https://github.com/CardiacModelling/nanion-data-export/blob/master/txt2eph.py) for conversion to Nanion .eph format. 
 
+## Other files for context
+
+The scripts `example_sine_wave_run.m` and `example_staircase_run.m` show the number of boxes hit by these previous designs. The identifiability folder contains fitting results taken directly from [https://github.com/CardiacModelling/empirical_quantification_of_model_discrepancy](https://github.com/CardiacModelling/empirical_quantification_of_model_discrepancy) 
+in a spreadsheet to get the percentage error calculations in the Results->Identifiability section
+
 ## TODO!
 
 Before public release!
