@@ -52,6 +52,18 @@ idx = ordering(end)
 fprintf("Best protocol is %s which visits %i boxes.\n",names{idx}, best_score)
 
 % These are the best 10 protocols:
-for i=length(ordering):-1:length(ordering)-10
-    plot_a_generated_protocol([results_dir filesep names{ordering(i)}]);
+f = figure
+counter = 1;
+for i=length(ordering):-1:length(ordering)-9
+    [a b traces] = plot_a_generated_protocol([results_dir filesep names{ordering(i)}]);
+    figure(f)
+    subplot(5,2,counter)
+    yyaxis left
+    plot(traces(:,1), traces(:,2),'b-')
+    hold on
+    yyaxis right
+    plot(traces(:,1), traces(:,3), 'r-')
+    plot([0 11000],[-88.6 -88.6], 'k--')
+    xlim([0 11000])
+    counter = counter + 1;
 end

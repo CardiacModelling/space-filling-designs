@@ -1,4 +1,4 @@
-function [total_hits, total_duration] = plot_a_generated_protocol(filename, varargin)
+function [total_hits, total_duration, varargout] = plot_a_generated_protocol(filename, varargin)
     % PlotAGeneratedProtocol This gives a slightly different (lower) number of 
     % boxes because it outputs just before each step, and then 1ms after, as 
     % opposed to the design script which includes the step itself. This one, 
@@ -177,6 +177,10 @@ function [total_hits, total_duration] = plot_a_generated_protocol(filename, vara
     set(gcf,'Renderer','Painter')
 
     total_duration = t(end);
+
+    if nargout == 3
+        varargout{1} = [t V IKr]
+    end
 end
 
 function highlight_box(i,j,k)
