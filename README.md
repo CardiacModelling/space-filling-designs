@@ -5,7 +5,7 @@ These are all Matlab scripts, tested on MATLAB R2023b.
 
 ## Prerequisities
 
-First download the file `cmaes.m` [from Nicholas Hansen's website](https://cma-es.github.io/cmaes.m) under a GPL licence, and add that to this source code directly in the top level directory.
+First download the file `cmaes.m` [from Nicholas Hansen's website](https://cma-es.github.io/cmaes.m) under a GPL licence, and add that to this source code directly in the top level directory. Version `3.61.beta` was used for the paper results.
 
 ## Running designs
 
