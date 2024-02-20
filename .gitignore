@@ -2,7 +2,6 @@
 outcmaes*.dat
 variablescmaes.mat
 *.asv
-
+cmaes.m
 identifiability/~$BeattieAllProtocolsOwnData.xlsx
-
 identifiability/~$WangAllProtocolsToOwnData.xlsx
