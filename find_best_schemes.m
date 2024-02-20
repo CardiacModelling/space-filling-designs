@@ -162,7 +162,6 @@ for i=length(ordering):-1:length(ordering)-4
     end
     counter = counter + 1;
 end
-set(gcf, 'PaperUnits', 'inches');
-set(gcf, 'PaperSize', [4 2]);
 set(gcf,'Renderer','Painter')
-exportgraphics(gcf,'for_writeup/5_best.pdf');
+% Make the size nice then run the below!
+%exportgraphics(gcf,'for_writeup/5_best.pdf');

@@ -71,7 +71,10 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     full_clamp = [full_clamp; end_clamp];
     
     options = odeset('AbsTol',1e-8,'RelTol',1e-8);
+    % Uncomment to use the ODE solver's timesteps
     [t,y]=ode15s(@model,[0 full_clamp(end,1)],y,options,full_clamp,Model_Params);
+    % Uncomment to use 1 ms steps
+    %[t,y]=ode15s(@model,[0:1:full_clamp(end,1)],y,options,full_clamp,Model_Params);
     % Phase plots
     a = y(:,1);
     r = y(:,2);
