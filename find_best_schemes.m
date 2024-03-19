@@ -67,7 +67,7 @@ hold all
 counter = 1;
 % These are the best 5 protocols:
 for i=length(ordering):-1:length(ordering)-4
-    [a b traces] = plot_a_generated_protocol([results_dir filesep names{ordering(i)}]);
+    [a b traces] = plot_a_generated_protocol([results_dir filesep names{ordering(i)}], false);
     % Full protocol
     axes(ha(counter))
     yyaxis left

@@ -162,8 +162,10 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     ylabel('Recovery, $r$ gate','interpreter','latex','FontSize',16)
     zlabel('Voltage (mV)','interpreter','latex','FontSize',16)
     zticks([-120 -90 -60 -30 0 30 60])
-    xticks([0 0.5 1])
-    yticks([0 0.5 1])
+    xticks([0:6]./6)
+    yticks([0:6]./6)
+    xticklabels({"0", "1/6", "2/6", "3/6", "4/6", "5/6", "1"})
+    yticklabels({"0", "1/6", "2/6", "3/6", "4/6", "5/6", "1"})
     
     N_boxes = 6;
     box_hits = zeros(N_boxes,N_boxes,N_boxes);
@@ -191,6 +193,6 @@ function highlight_box(i,j,k)
     x = [0 0 0 1 0 0; 0 0 1 1 0 1; 0 1 1 1 1 1; 0 1 0 1 1 0]; % The columns here are a vector of vertices for each face
     y = [1 0 1 1 1 1; 0 0 1 0 1 1; 0 0 0 0 1 0; 1 0 0 1 1 0];
     z = [1 0 1 1 0 0; 1 1 1 1 1 0; 0 1 1 0 1 0; 0 0 1 0 0 0] ;
-    fill3((1/6).*(i-1) +(1/6).*x,(1/6).*(j-1)+(1/6).*y,-120 + 30.*(k-1) + 30.*z,'b','FaceAlpha',0.1, 'EdgeColor','none')
+    fill3((1/6).*(i-1) +(1/6).*x,(1/6).*(j-1)+(1/6).*y,-120 + 30.*(k-1) + 30.*z,'r','FaceAlpha',0.1, 'EdgeColor','none')
 
 end
