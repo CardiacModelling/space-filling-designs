@@ -67,7 +67,8 @@ hold all
 counter = 1;
 % These are the best 5 protocols:
 for i=length(ordering):-1:length(ordering)-4
-    [a b traces] = plot_a_generated_protocol([results_dir filesep names{ordering(i)}], false);
+    filename = [results_dir filesep names{ordering(i)}];
+    [a b traces] = plot_a_generated_protocol(filename, false);
     % Full protocol
     axes(ha(counter))
     yyaxis left
@@ -160,8 +161,14 @@ for i=length(ordering):-1:length(ordering)-4
         xticks(6500:100:6800)
         xticklabels({'6.5','6.6','6.7','6.8'})
     end
+    clamps(:,counter-1:counter) = load(filename);
     counter = counter + 1;
 end
 set(gcf,'Renderer','Painter')
+fprintf('')
+fprintf('Step & t (ms) & V (mV) & t (ms) & V(mV) & t (ms) & V (mV) & t (ms) & V (mV) & t (ms) & V (mV)\n')
+for i=1:size(clamps,1)
+fprintf('%i & %g & %g & %g & %g & %g & %g & %g & %g & %g & %g\\\\ \n', i, clamps(i,:))
+end
 % Make the size nice then run the below!
 %exportgraphics(gcf,'for_writeup/5_best.pdf');

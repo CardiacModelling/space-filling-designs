@@ -53,3 +53,20 @@ xlabel('activation a')
 ylabel('recovery r')
 zlabel('Voltage (mV)')
 zlim([-120 60])
+hold all
+hits = find(box_hits == 0);
+for i = 1:length(hits)
+    [pos_i, pos_j, pos_k ] = ind2sub(size(box_hits),hits(i));
+    highlight_box(pos_i, pos_j, pos_k)
+end
+set(gca,'FontSize',14,'Box','on')
+set(gcf,'Renderer','Painter')
+
+function highlight_box(i,j,k)
+
+    x = [0 0 0 1 0 0; 0 0 1 1 0 1; 0 1 1 1 1 1; 0 1 0 1 1 0]; % The columns here are a vector of vertices for each face
+    y = [1 0 1 1 1 1; 0 0 1 0 1 1; 0 0 0 0 1 0; 1 0 0 1 1 0];
+    z = [1 0 1 1 0 0; 1 1 1 1 1 0; 0 1 1 0 1 0; 0 0 1 0 0 0] ;
+    fill3((1/6).*(i-1) +(1/6).*x,(1/6).*(j-1)+(1/6).*y,-120 + 30.*(k-1) + 30.*z,'r','FaceAlpha',0.1, 'EdgeColor','none')
+
+end
