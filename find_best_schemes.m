@@ -65,6 +65,10 @@ ha = tight_subplot(5,2,.03,[.1 .06],[.1 .1]);
 axes(ha(1))
 hold all
 counter = 1;
+zoom1_start = 5750;
+zoom1_end = 6325;
+zoom2_start = 5350;
+zoom2_end = 6100;
 % These are the best 5 protocols:
 for i=length(ordering):-1:length(ordering)-4
     filename = [results_dir filesep names{ordering(i)}];
@@ -73,19 +77,19 @@ for i=length(ordering):-1:length(ordering)-4
     axes(ha(counter))
     yyaxis left
     if counter==1
-        patch([6950 7350 7350 6950],[low_V low_V high_V high_V],[0.9 0.9 0.9],'EdgeColor','none')
+        patch([zoom1_start zoom1_end zoom1_end zoom1_start],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
     end
     if counter==3
-        patch([6350 7250 7250 6350],[low_V low_V high_V high_V],[0.9 0.9 0.9],'EdgeColor','none')
+        patch([zoom2_start zoom2_end zoom2_end zoom2_start],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
     end
     if counter==5
-        patch([8100 8750 8750 8100],[low_V low_V high_V high_V],[0.9 0.9 0.9],'EdgeColor','none')
+        patch([5800 7200 7200 5800],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
     end
     if counter==7
-        patch([5000 6200 6200 5000],[low_V low_V high_V high_V],[0.9 0.9 0.9],'EdgeColor','none')
+        patch([5600 6900 6900 5600],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
     end
     if counter==9
-        patch([6500 6800 6800 6500],[low_V low_V high_V high_V],[0.9 0.9 0.9],'EdgeColor','none')
+        patch([6550 6900 6900 6550],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
     end
     hold on
     plot(traces(:,1), traces(:,2),'-','LineWidth',1)
@@ -96,15 +100,15 @@ for i=length(ordering):-1:length(ordering)-4
     yyaxis right
     plot([0 12000],[0 0], '-' , 'Color',[0.6; 0.6; 0.6])
     plot(traces(:,1), traces(:,3), '-','LineWidth',1.5)
-    xlim([0 11500])
+    xlim([0 10250])
     ylim([low_I high_I])
     yticks(0:5:15)
     yticklabels({'','','',''})
     if counter==1
         title('Full Protocol','Interpreter','latex')
     end
-    xticks(0:1000:11000)
-    xticklabels({'0', '1','2','3','4','5','6','7','8','9','10','11'})
+    xticks(0:1000:10000)
+    xticklabels({'0', '1','2','3','4','5','6','7','8','9','10'})
     if i==length(ordering)-4
         
         xlabel('Time (s)','FontSize',16,'Interpreter','latex')
@@ -124,7 +128,7 @@ for i=length(ordering):-1:length(ordering)-4
     yyaxis right
     plot([0 12000],[0 0], '-' , 'Color',[0.6; 0.6; 0.6])
     plot(traces(:,1), traces(:,3), '-','LineWidth',1.5)
-    xlim([0 11500])
+    xlim([0 10500])
     ylim([low_I high_I])
     yticks(0:5:15)
 
@@ -137,29 +141,29 @@ for i=length(ordering):-1:length(ordering)-4
         title('Zoomed Region','Interpreter','latex')
     end
     if counter==2
-        xlim([6950 7350])
-        xticks(6900:100:7400)
-        xticklabels({'6.9','7.0','7.1','7.2','7.3','7.4'})
+        xlim([zoom1_start zoom1_end])
+        xticks(5800:100:6300)
+        xticklabels({'5.8','5.9','6.0','6.1','6.2','6.3'})
     end
     if counter==4
-        xlim([6350 7250])
-        xticks(6400:100:7200)
-        xticklabels({'6.4','6.5','6.6','6.7','6.8','6.9','7.0','7.1','7.2'})
+        xlim([zoom2_start zoom2_end])
+        xticks(5400:100:6100)
+        xticklabels({'5.4','5.5','5.6','5.7','5.8','5.9','6.0','6.1'})
     end
     if counter==6
-        xlim([8100 8750])
-        xticks(8100:100:8700)
-        xticklabels({'8.1','8.2','8.3','8.4','8.5','8.6','8.7'})
+        xlim([5800 7200])
+        xticks(5800:200:7200)
+    xticklabels({'5.8','6.0','6.2','6.4','6.6','6.8','7.0','7.2'})
     end
     if counter==8
-        xlim([5000 6200])
-        xticks(5000:200:6200)
-    xticklabels({'5.0','5.2','5.4','5.6','5.8','6.0','6.2'})
+        xlim([5600 6900])
+        xticks(5600:200:6800)
+    xticklabels({'5.6','5.8','6.0','6.2','6.4','6.6','6.8'})
     end
     if counter==10
-        xlim([6500 6800])
-        xticks(6500:100:6800)
-        xticklabels({'6.5','6.6','6.7','6.8'})
+        xlim([6550 6900])
+        xticks(6600:100:6900)
+        xticklabels({'6.6','6.7','6.8','6.9'})
     end
     clamps(:,counter-1:counter) = load(filename);
     counter = counter + 1;
