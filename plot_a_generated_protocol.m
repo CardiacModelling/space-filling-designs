@@ -56,7 +56,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     
     end_time = full_clamp(end,1);
     
-    end_clamp = [end_time+0.001	-80	
+    end_clamp = [end_time	-80	
         end_time+1000 -80
         end_time+1000 40
         end_time+1500 40

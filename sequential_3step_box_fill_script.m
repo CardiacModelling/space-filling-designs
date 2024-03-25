@@ -26,13 +26,13 @@ for z = 1:num_to_generate
     % The standard steps at the beginning defined as a table to interpolate from:
     clamp = [ 0 -80
         250 -80.0
-        250.00001 -120
+        250 -120
         300 -120
         700 -80
         900 -80
-        900.0001 40
+        900 40
         1900 40
-        1900.0001 -120
+        1900 -120
         2400 -120 ];
     
     t = [0];
@@ -43,7 +43,7 @@ for z = 1:num_to_generate
     % Run through the predefined first steps and record box hits.
     options = odeset;
     [t,y]=ode15s(@model,[0:1:clamp(end,1)],y,options,clamp,Model_Params);
-    V = interp1(clamp(:,1),clamp(:,2),t,'linear',-80);
+    V = getVoltage(t, clamp);
     box_hits = update_box_hits(box_hits, t, y, V);
     
     set(0,'CurrentFigure', fig1)
@@ -233,6 +233,7 @@ for z = 1:num_to_generate
 
     Filename = sprintf('%s_%i_box_%i_step_Space_Filling_Params_%g_%g.txt', datestr(now,'yyyy-mm-dd-HH-MM'),N_boxes, N_steps, total_hits, total_score)
     fprintf('Design %s is complete.\nIt visited %i/%i boxes (%.1f%%) and got a total score of %f\n', Filename, total_hits, N_boxes^3, 100*total_hits/(N_boxes^3),total_score)
+    fprintf("N.B a few more might be visited when we add the end steps, and analyse with find_best_schemes.m, but we don''t worry about them for optimisation.\n")
     save(Filename,'All_Params','-ascii')
 
 end
