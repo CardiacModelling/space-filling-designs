@@ -1,7 +1,10 @@
 close all
 clear all
 
+% results_dir = 'resulting_designs_2019';
 results_dir = 'resulting_designs_2024';
+% results_dir = 'play_with_6_steps_and_ramps/6_step_designs';
+% results_dir = 'play_with_6_steps_and_ramps/step_ramp_designs';
 
 listing = dir(results_dir);
 
@@ -98,9 +101,8 @@ for i=length(ordering):-1:length(ordering)-4
     yticklabels({'-120\,mV', '-80\,mV', '-40\,mV', '0\,mV','40\,mV'})
     hold on
     yyaxis right
-    plot([0 12000],[0 0], '-' , 'Color',[0.6; 0.6; 0.6])
+    plot([0 traces(end,1)],[0 0], '-' , 'Color',[0.6; 0.6; 0.6])
     plot(traces(:,1), traces(:,3), '-','LineWidth',1.5)
-    xlim([0 10250])
     ylim([low_I high_I])
     yticks(0:5:15)
     yticklabels({'','','',''})
@@ -126,9 +128,8 @@ for i=length(ordering):-1:length(ordering)-4
     yticklabels({'', '', '', '',''})
     hold on
     yyaxis right
-    plot([0 12000],[0 0], '-' , 'Color',[0.6; 0.6; 0.6])
+    plot([0 traces(end,1)],[0 0], '-' , 'Color',[0.6; 0.6; 0.6])
     plot(traces(:,1), traces(:,3), '-','LineWidth',1.5)
-    xlim([0 10500])
     ylim([low_I high_I])
     yticks(0:5:15)
 
@@ -172,7 +173,7 @@ set(gcf,'Renderer','Painter')
 fprintf('')
 fprintf('Step & t (ms) & V (mV) & t (ms) & V(mV) & t (ms) & V (mV) & t (ms) & V (mV) & t (ms) & V (mV)\n')
 for i=1:size(clamps,1)
-fprintf('%i & %g & %g & %g & %g & %g & %g & %g & %g & %g & %g\\\\ \n', i, clamps(i,:))
+fprintf('%i & $%g$ & $%g$ & $%g$ & $%g$ & $%g$ & $%g$ & $%g$ & $%g$ & $%g$ & $%g$\\\\ \n', i, clamps(i,:))
 end
 % Make the size nice then run the below!
 %exportgraphics(gcf,'for_writeup/5_best.pdf');
