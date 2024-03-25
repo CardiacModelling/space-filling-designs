@@ -100,6 +100,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     yticks(-120:40:40)
     yticklabels({"-120", "-80", "-40", "0", "+40"})
     ylim([-130 70])
+    xlim([0 t(end) ])
     
     axes(ha(2))
     hold all
@@ -115,6 +116,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     set(gca,'FontSize',14,'Box','on')
     set(gca, 'XTickLabel', [])
     yticklabels({"0", "0.5", "1"})
+    xlim([0 t(end) ])
     
     axes(ha(3))
     hold all
@@ -130,6 +132,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     set(gca,'FontSize',14,'Box','on')
     set(gca, 'XTickLabel', [])
     yticklabels({"0", "0.5", "1"})
+    xlim([0 t(end) ])
     
     IKr = Model_Params(end).*a.*r.*(V-(-88.6));
     axes(ha(4))
@@ -145,6 +148,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     xlabel('Time (ms)','interpreter','latex','FontSize',16)
     set(gca,'FontSize',14,'Box','on')
     ylabel('IKr (nA)','interpreter','latex','FontSize',16)
+    xlim([0 t(end) ])
     
     figure
     hold all
