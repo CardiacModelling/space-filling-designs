@@ -28,13 +28,13 @@ for z = 1:num_to_generate
     % The standard steps at the beginning defined as a table to interpolate from:
     clamp = [ 0 -80
         250 -80.0
-        250.00001 -120
+        250 -120
         300 -120
         700 -80
         900 -80
-        900.0001 40
+        900 40
         1900 40
-        1900.0001 -120
+        1900 -120
         2400 -120 ];
     
     t = [0];
@@ -45,7 +45,7 @@ for z = 1:num_to_generate
     % Run through the predefined first steps and record box hits.
     options = odeset;
     [t,y]=ode15s(@model,[0:1:clamp(end,1)],y,options,clamp,Model_Params);
-    V = interp1(clamp(:,1),clamp(:,2),t,'linear',-80);
+    V = getVoltage(t, clamp);
     box_hits = update_box_hits(box_hits, t, y, V);
     
     set(0,'CurrentFigure', fig1)
@@ -156,7 +156,7 @@ for z = 1:num_to_generate
         empty_original_boxes = length(find(old_hits()==0));
         empty_boxes_now = length(find(box_hits()==0));
         number_new_boxes = empty_original_boxes - empty_boxes_now;
-        fprintf("\n 3 step design complete, it added %i new boxes.\n\n",number_new_boxes)
+        fprintf("\n 6 step design complete, it added %i new boxes.\n\n",number_new_boxes)
     
         % Store end state
         ICs = y_run(end,:);
