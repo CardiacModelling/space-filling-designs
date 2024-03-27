@@ -79,6 +79,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     a = y(:,1);
     r = y(:,2);
     V = getVoltage(t, full_clamp);
+    t = t./1000.0; % Get into seconds for nicer plot.
     
     colours = parula(length(t));
     set(groot,'defaultAxesTickLabelInterpreter','latex'); 
@@ -100,7 +101,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     yticks(-120:40:40)
     yticklabels({"-120", "-80", "-40", "0", "+40"})
     ylim([-130 70])
-    xlim([0 t(end) ])
+    xlim([0 t(end)])
     
     axes(ha(2))
     hold all
@@ -111,12 +112,12 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
             plot([t(t_idx-1) t(t_idx)],[a(t_idx-1) a(t_idx)],'-','Color',colours(t_idx,:),'LineWidth',1.5)
         end
     end
-    ylabel('Activation, $a$ gate','interpreter','latex')
-    yticks([0 0.5 1])
+    ylabel({'Activation';'$a$ gate'},'interpreter','latex')
+    yticks([0 1])
     set(gca,'FontSize',14,'Box','on')
     set(gca, 'XTickLabel', [])
-    yticklabels({"0", "0.5", "1"})
-    xlim([0 t(end) ])
+    yticklabels({"0", "1"})
+    xlim([0 t(end)])
     
     axes(ha(3))
     hold all
@@ -127,12 +128,12 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
             plot([t(t_idx-1) t(t_idx)],[r(t_idx-1) r(t_idx)],'-','Color',colours(t_idx,:),'LineWidth',1.5)
         end
     end
-    ylabel('Recovery, $r$ gate','interpreter','latex')
-    yticks([0 0.5 1])
+    ylabel({'Recovery';'$r$ gate'},'interpreter','latex')
+    yticks([0 1])
     set(gca,'FontSize',14,'Box','on')
     set(gca, 'XTickLabel', [])
-    yticklabels({"0", "0.5", "1"})
-    xlim([0 t(end) ])
+    yticklabels({"0","1"})
+    xlim([0 t(end)])
     
     IKr = Model_Params(end).*a.*r.*(V-(-88.6));
     axes(ha(4))
@@ -148,7 +149,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     xlabel('Time (ms)','interpreter','latex','FontSize',16)
     set(gca,'FontSize',14,'Box','on')
     ylabel('IKr (nA)','interpreter','latex','FontSize',16)
-    xlim([0 t(end) ])
+    xlim([0 t(end)])
     
     figure
     hold all
@@ -162,7 +163,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     xlim([0 1])
     ylim([0 1])
     zlim([-120 60])
-    xlabel('Activation, $a$ gate','interpreter','latex','FontSize',16)
+    xlabel({'Activation';'$a$ gate'},'interpreter','latex','FontSize',16)
     ylabel('Recovery, $r$ gate','interpreter','latex','FontSize',16)
     zlabel('Voltage (mV)','interpreter','latex','FontSize',16)
     zticks([-120 -90 -60 -30 0 30 60])
@@ -188,7 +189,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     total_duration = t(end);
 
     if nargout == 3
-        varargout{1} = [t V IKr]
+        varargout{1} = [t.*1000.0 V IKr]; % Export, with time back in milliseconds!
     end
 end
 

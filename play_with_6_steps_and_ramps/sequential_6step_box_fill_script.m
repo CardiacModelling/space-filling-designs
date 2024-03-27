@@ -5,7 +5,7 @@ addpath('..')
 
 % Parameters to tweak
 N_boxes = 6; % in each dimension.u
-N_steps = 9; % sets of 3 steps... (9*6 = 54 sections in total)
+N_steps = 9; % sets of 6 steps... (9*6 = 54 sections in total)
 optimise = true; % Brute force sweep if false.
 print_lots = false; % Display output of every objective call
 num_to_generate = 100;

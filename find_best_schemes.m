@@ -35,24 +35,27 @@ end
 figure
 subplot(1,3,1)
 hist(100.*scores/6^3)
-xlabel('Percentage of Boxes visited')
+xlabel('Percentage of boxes visited')
 ylabel('Frequency')
 
 subplot(1,3,2)
-hist(durations./1000)
+hist(durations)
 xlabel('Duration of protocol (s)')
 ylabel('Frequency')
 
 subplot(1,3,3)
-scatter(100.*scores/6^3, durations./1000)
-xlabel('Percentage of Boxes visited')
-ylabel('Duration of Protocol (s)')
+scatter(100.*scores/6^3, durations)
+xlabel('Percentage of boxes visited')
+ylabel('Duration of protocol (s)')
 
 [s,ordering] = sort(scores);
 best_score = s(end);
 idx = ordering(end);
-[best_score idx] = max(scores);
-fprintf("Best protocol is %s which visits %i boxes.\n",names{idx}, best_score)
+fprintf("Best protocol is %s which visits %i boxes.\n",names{ordering(end)}, s(end))
+fprintf("2nd Best protocol is %s which visits %i boxes.\n",names{ordering(end-1)}, s(end-1))
+fprintf("3rd Best protocol is %s which visits %i boxes.\n",names{ordering(end-2)}, s(end-2))
+fprintf("4th Best protocol is %s which visits %i boxes.\n",names{ordering(end-3)}, s(end-3))
+fprintf("5th Best protocol is %s which visits %i boxes.\n",names{ordering(end-4)}, s(end-4))
 
 % For nice axis scalings
 low_V = -130;
