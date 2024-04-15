@@ -14,45 +14,47 @@ function [score] = step_param_objective(params,ICs,box_hits,Model_Params,printin
     lower_V = -120;
     penalty_score = 0;
     if params(2) > upper_V
-        penalty_score = penalty_score+20000*(1+params(2)-upper_V);
+        penalty_score = penalty_score+40000*(1+params(2)-upper_V);
         if printing; fprintf('Bad choice - V1 too high, score = %g.\n', penalty_score); end
     elseif params(2) < lower_V
-        penalty_score = penalty_score+20000*(1+lower_V-params(2));
+        penalty_score = penalty_score+40000*(1+lower_V-params(2));
         if printing; fprintf('Bad choice - V1 too low, score = %g.\n', penalty_score); end
     end
     if params(4) > upper_V
-        penalty_score = penalty_score+20000*(1+params(4)-upper_V);
+        penalty_score = penalty_score+40000*(1+params(4)-upper_V);
         if printing; fprintf('Bad choice - V2 too high, score = %g.\n', penalty_score); end
     elseif params(4) < lower_V
-        penalty_score = penalty_score+20000*(1+lower_V-params(4));
+        penalty_score = penalty_score+40000*(1+lower_V-params(4));
         if printing; fprintf('Bad choice - V2 too low, score = %g.\n', penalty_score); end
     end
     if params(6) > upper_V
-        penalty_score = penalty_score+20000*(1+params(6)-upper_V);
+        penalty_score = penalty_score+40000*(1+params(6)-upper_V);
         if printing; fprintf('Bad choice - V3 too high, score = %g.\n', penalty_score); end
     elseif params(6) < lower_V
-        penalty_score = penalty_score+20000*(1+lower_V-params(6));
+        penalty_score = penalty_score+40000*(1+lower_V-params(6));
         if printing; fprintf('Bad choice - V3 too low, score = %g.\n', penalty_score); end
     end
     
     % Penalty for step that is too short
     min_duration = 20;
     if (params(1) < min_duration)
-        penalty_score = penalty_score+50000*(1+min_duration-params(1));
+        penalty_score = penalty_score+40000*(1+min_duration-params(1));
         if printing; fprintf('Bad choice - 1st step too short, score = %g.\n', penalty_score); end
     end
     if (params(3) < min_duration)
-        penalty_score = penalty_score+50000*(1+min_duration-params(3));
+        penalty_score = penalty_score+40000*(1+min_duration-params(3));
         if printing; fprintf('Bad choice - 2nd step too short, score = %g.\n', penalty_score); end
     end
     if (params(5) < min_duration)
-        penalty_score = penalty_score+50000*(1+min_duration-params(5));
+        penalty_score = penalty_score+40000*(1+min_duration-params(5));
         if printing; fprintf('Bad choice - 3rd step too short, score = %g.\n', penalty_score); end
     end
 
     % Durations
     for i=1:2:5
-        % We can't have any negative durations!
+        % We can't have any negative durations, just avoid completely if
+        % optimiser suggests these with a huge penalty and return
+        % immediately.
         if params(i) <= 0 
             score = 1e12;
             return
