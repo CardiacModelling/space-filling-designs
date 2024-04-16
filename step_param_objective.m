@@ -10,43 +10,44 @@ function [score] = step_param_objective(params,ICs,box_hits,Model_Params,printin
     empty_original_boxes = length(find(box_hits()==0));
 
     % Heavy penalty for steps that are out of voltage range...
+    penalty_factor = 20000;
     upper_V = 60;
     lower_V = -120;
     penalty_score = 0;
     if params(2) > upper_V
-        penalty_score = penalty_score+40000*(1+params(2)-upper_V);
+        penalty_score = penalty_score+penalty_factor*(1+params(2)-upper_V);
         if printing; fprintf('Bad choice - V1 too high, score = %g.\n', penalty_score); end
     elseif params(2) < lower_V
-        penalty_score = penalty_score+40000*(1+lower_V-params(2));
+        penalty_score = penalty_score+penalty_factor*(1+lower_V-params(2));
         if printing; fprintf('Bad choice - V1 too low, score = %g.\n', penalty_score); end
     end
     if params(4) > upper_V
-        penalty_score = penalty_score+40000*(1+params(4)-upper_V);
+        penalty_score = penalty_score+penalty_factor*(1+params(4)-upper_V);
         if printing; fprintf('Bad choice - V2 too high, score = %g.\n', penalty_score); end
     elseif params(4) < lower_V
-        penalty_score = penalty_score+40000*(1+lower_V-params(4));
+        penalty_score = penalty_score+penalty_factor*(1+lower_V-params(4));
         if printing; fprintf('Bad choice - V2 too low, score = %g.\n', penalty_score); end
     end
     if params(6) > upper_V
-        penalty_score = penalty_score+40000*(1+params(6)-upper_V);
+        penalty_score = penalty_score+penalty_factor*(1+params(6)-upper_V);
         if printing; fprintf('Bad choice - V3 too high, score = %g.\n', penalty_score); end
     elseif params(6) < lower_V
-        penalty_score = penalty_score+40000*(1+lower_V-params(6));
+        penalty_score = penalty_score+penalty_factor*(1+lower_V-params(6));
         if printing; fprintf('Bad choice - V3 too low, score = %g.\n', penalty_score); end
     end
     
     % Penalty for step that is too short
     min_duration = 20;
     if (params(1) < min_duration)
-        penalty_score = penalty_score+40000*(1+min_duration-params(1));
+        penalty_score = penalty_score+penalty_factor*(1+min_duration-params(1));
         if printing; fprintf('Bad choice - 1st step too short, score = %g.\n', penalty_score); end
     end
     if (params(3) < min_duration)
-        penalty_score = penalty_score+40000*(1+min_duration-params(3));
+        penalty_score = penalty_score+penalty_factor*(1+min_duration-params(3));
         if printing; fprintf('Bad choice - 2nd step too short, score = %g.\n', penalty_score); end
     end
     if (params(5) < min_duration)
-        penalty_score = penalty_score+40000*(1+min_duration-params(5));
+        penalty_score = penalty_score+penalty_factor*(1+min_duration-params(5));
         if printing; fprintf('Bad choice - 3rd step too short, score = %g.\n', penalty_score); end
     end
 

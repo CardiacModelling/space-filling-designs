@@ -170,7 +170,11 @@ for z = 1:num_to_generate
         r = y(:,2);
         
         
-        % Plot in loop to highlight new 3 steps
+        % Plot in loop to highlight new 3 steps 
+        % N.B. you can get what looks like ramps, due to interpolation at
+        % the end of relaxed bits, but the ODE solutions aren't and they
+        % will look correct when we plot with plot_a_generated_protocol
+        % later!
         set(0, 'CurrentFigure', fig1)
         subplot(4,1,1)
         plot(t, V,'k-','LineWidth',2)
