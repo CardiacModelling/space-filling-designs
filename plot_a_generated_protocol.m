@@ -38,6 +38,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     t = [0];
     V = [-80];
     y = [0.00017    0.601]; % Steady state for -80mV
+    y_wang = [0.0034    0.0000    0.9925    0.0025];
     
     next_time_add = 0;
     for i=1:length(clamps)
@@ -73,13 +74,19 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     options = odeset('AbsTol',1e-8,'RelTol',1e-8);
     % Uncomment to use the ODE solver's timesteps
     [t,y]=ode15s(@model,[0 full_clamp(end,1)],y,options,full_clamp,Model_Params);
+    [t_wang,y_wang]=ode15s(@wang_model,[0 full_clamp(end,1)],y_wang,options,full_clamp,Model_Params);
+
     % Uncomment to use 1 ms steps
     %[t,y]=ode15s(@model,[0:1:full_clamp(end,1)],y,options,full_clamp,Model_Params);
     % Phase plots
     a = y(:,1);
     r = y(:,2);
+    o_wang = y_wang(:,4);
+    y_wang(end,:)
     V = getVoltage(t, full_clamp);
+    V_wang = getVoltage(t_wang, full_clamp);
     t = t./1000.0; % Get into seconds for nicer plot.
+    t_wang = t_wang./1000.0; % Get into seconds for nicer plot.
     
     colours = parula(length(t));
     set(groot,'defaultAxesTickLabelInterpreter','latex'); 
@@ -136,11 +143,16 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     xlim([0 t(end)])
     
     IKr = Model_Params(end).*a.*r.*(V-(-88.6));
+    gKr_wang =  2.11451916137530976e-01;
+    IKr_wang = gKr_wang.*o_wang.*(V_wang-(-88.6));
     axes(ha(4))
     plot([t(1) t(end)],[0 0],'k--')
     hold all
     if simple_plots
         plot(t,IKr,'-','LineWidth',1.5)
+        hold on
+        plot(t_wang,IKr_wang,'b-','LineWidth',1.5)
+        legend('','Beattie', 'Wang')
     else
     for t_idx = 2:length(t)
         plot([t(t_idx-1) t(t_idx)],[IKr(t_idx-1) IKr(t_idx)],'-','Color',colours(t_idx,:),'LineWidth',1.5)
