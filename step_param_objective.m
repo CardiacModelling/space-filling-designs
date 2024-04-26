@@ -10,7 +10,7 @@ function [score] = step_param_objective(params,ICs,box_hits,Model_Params,printin
     empty_original_boxes = length(find(box_hits()==0));
 
     % Heavy penalty for steps that are out of voltage range...
-    penalty_factor = 20000;
+    penalty_factor = 50000;
     upper_V = 60;
     lower_V = -120;
     penalty_score = 0;

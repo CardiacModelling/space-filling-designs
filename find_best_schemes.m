@@ -32,21 +32,28 @@ for i = 1:length(listing)
     close all
 end
 
+% figure
+% subplot(1,3,1)
+% hist(100.*scores/6^3)
+% xlabel('Percentage of boxes visited')
+% ylabel('Frequency')
+% 
+% subplot(1,3,2)
+% hist(durations)
+% xlabel('Duration of protocol (s)')
+% ylabel('Frequency')
+% 
+% subplot(1,3,3)
+% scatter(100.*scores/6^3, durations)
+% xlabel('Percentage of boxes visited')
+% ylabel('Duration of protocol (s)')
+
 figure
-subplot(1,3,1)
-hist(100.*scores/6^3)
-xlabel('Percentage of boxes visited')
-ylabel('Frequency')
-
-subplot(1,3,2)
-hist(durations)
-xlabel('Duration of protocol (s)')
-ylabel('Frequency')
-
-subplot(1,3,3)
-scatter(100.*scores/6^3, durations)
-xlabel('Percentage of boxes visited')
-ylabel('Duration of protocol (s)')
+scatterhistogram(100.*scores/6^3,durations,"NumBins",12,"Color",'b','FontSize',16,"HistogramDisplayStyle","bar")
+xlabel('Boxes visited (%)')
+ylabel('Duration of protocol (seconds)')
+xlim([73 83])
+ylim([8 12])
 
 [s,ordering] = sort(scores);
 best_score = s(end);
@@ -71,32 +78,26 @@ ha = tight_subplot(5,2,.03,[.1 .06],[.1 .1]);
 axes(ha(1))
 hold all
 counter = 1;
-zoom1_start = 5750;
-zoom1_end = 6325;
-zoom2_start = 5350;
-zoom2_end = 6100;
 % These are the best 5 protocols:
 for i=length(ordering):-1:length(ordering)-4
     filename = [results_dir filesep names{ordering(i)}];
     [a b traces] = plot_a_generated_protocol(filename, false);
+    traces(:,1) = traces(:,1)./1000.0;
     % Full protocol
     axes(ha(counter))
     yyaxis left
     if counter==1
-        patch([zoom1_start zoom1_end zoom1_end zoom1_start],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
+        zoom_region = [5.3 5.8];
+    elseif counter==3
+        zoom_region = [5 5.8];
+    elseif counter==5
+        zoom_region = [6.7 7.2];
+    elseif counter==7
+        zoom_region = [6.7 8.4];
+    elseif counter==9
+        zoom_region = [5.45 6.27];
     end
-    if counter==3
-        patch([zoom2_start zoom2_end zoom2_end zoom2_start],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
-    end
-    if counter==5
-        patch([5800 7200 7200 5800],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
-    end
-    if counter==7
-        patch([5600 6900 6900 5600],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
-    end
-    if counter==9
-        patch([6550 6900 6900 6550],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
-    end
+    patch([zoom_region(1) zoom_region(2) zoom_region(2) zoom_region(1)],[low_V low_V high_V-1 high_V-1],[0.9 0.9 0.9],'EdgeColor','none')
     hold on
     plot(traces(:,1), traces(:,2),'-','LineWidth',1)
     ylim([low_V high_V])
@@ -106,14 +107,15 @@ for i=length(ordering):-1:length(ordering)-4
     yyaxis right
     plot([0 traces(end,1)],[0 0], '-' , 'Color',[0.6; 0.6; 0.6])
     plot(traces(:,1), traces(:,3), '-','LineWidth',1.5)
+    xlim([0 traces(end,1)])
     ylim([low_I high_I])
     yticks(0:5:15)
     yticklabels({'','','',''})
+    xticks(0:1:11)
+    xticklabels('auto')
     if counter==1
         title('Full Protocol','Interpreter','latex')
     end
-    xticks(0:1000:10000)
-    xticklabels({'0', '1','2','3','4','5','6','7','8','9','10'})
     if i==length(ordering)-4
         
         xlabel('Time (s)','FontSize',16,'Interpreter','latex')
@@ -135,7 +137,7 @@ for i=length(ordering):-1:length(ordering)-4
     plot(traces(:,1), traces(:,3), '-','LineWidth',1.5)
     ylim([low_I high_I])
     yticks(0:5:15)
-
+    xticklabels('auto')
     yticklabels({'0\,nA','5\,nA','10\,nA','15\,nA'})
     if i==length(ordering)-4
         xlabel('Time (s)','FontSize',16,'Interpreter','latex')
@@ -144,34 +146,11 @@ for i=length(ordering):-1:length(ordering)-4
     if counter==2
         title('Zoomed Region','Interpreter','latex')
     end
-    if counter==2
-        xlim([zoom1_start zoom1_end])
-        xticks(5800:100:6300)
-        xticklabels({'5.8','5.9','6.0','6.1','6.2','6.3'})
-    end
-    if counter==4
-        xlim([zoom2_start zoom2_end])
-        xticks(5400:100:6100)
-        xticklabels({'5.4','5.5','5.6','5.7','5.8','5.9','6.0','6.1'})
-    end
-    if counter==6
-        xlim([5800 7200])
-        xticks(5800:200:7200)
-    xticklabels({'5.8','6.0','6.2','6.4','6.6','6.8','7.0','7.2'})
-    end
-    if counter==8
-        xlim([5600 6900])
-        xticks(5600:200:6800)
-    xticklabels({'5.6','5.8','6.0','6.2','6.4','6.6','6.8'})
-    end
-    if counter==10
-        xlim([6550 6900])
-        xticks(6600:100:6900)
-        xticklabels({'6.6','6.7','6.8','6.9'})
-    end
+    xlim(zoom_region)
     clamps(:,counter-1:counter) = load(filename);
     counter = counter + 1;
 end
+
 set(gcf,'Renderer','Painter')
 fprintf('')
 fprintf('Step & t (ms) & V (mV) & t (ms) & V(mV) & t (ms) & V (mV) & t (ms) & V (mV) & t (ms) & V (mV)\n')

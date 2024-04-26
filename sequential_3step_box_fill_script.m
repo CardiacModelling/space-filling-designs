@@ -93,6 +93,7 @@ for z = 1:num_to_generate
     sigma_guess = [100;20;100;20;100;20];
     cmaes_options = cmaes('defaults');
     cmaes_options.TolX = 2;
+    cmaes_options.PopSize = 50;
     
     All_Params = []; % matrix to store all the steps in
     total_score=0;

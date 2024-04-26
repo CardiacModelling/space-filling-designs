@@ -82,7 +82,6 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     a = y(:,1);
     r = y(:,2);
     o_wang = y_wang(:,4);
-    y_wang(end,:)
     V = getVoltage(t, full_clamp);
     V_wang = getVoltage(t_wang, full_clamp);
     t = t./1000.0; % Get into seconds for nicer plot.
