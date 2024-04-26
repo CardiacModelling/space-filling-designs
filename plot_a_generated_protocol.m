@@ -38,7 +38,7 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
     t = [0];
     V = [-80];
     y = [0.00017    0.601]; % Steady state for -80mV
-    y_wang = [0.0034    0.0000    0.9925    0.0025];
+    y_wang = [0.0034    0.0000    0.9925    0.0025];% Steady state for -80mV
     
     next_time_add = 0;
     for i=1:length(clamps)
@@ -199,8 +199,11 @@ function [total_hits, total_duration, varargout] = plot_a_generated_protocol(fil
 
     total_duration = t(end);
 
-    if nargout == 3
+    if nargout >= 3
         varargout{1} = [t.*1000.0 V IKr]; % Export, with time back in milliseconds!
+    end
+    if nargout >= 4
+        varargout{2} = [t_wang.*1000.0 V_wang IKr_wang];
     end
 end
 
