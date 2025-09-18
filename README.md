@@ -1,5 +1,11 @@
 # Space-filling optimal experimental designs for measuring ion channel kinetics
-Phase-voltage space filling optimal designs in Matlab
+Phase-voltage space filling optimal designs associated with the paper:
+
+
+GR Mirams, M Clerx, DG Whittaker, CL Lei (2024).
+**Optimal experimental designs for characterising ion channel gating by filling the phase-voltage space of model dynamics**.
+*Mathematics in Medical and Life Sciences* 1(1):2375494.  
+doi:[10.1080/29937574.2024.2375494](https://doi.org/10.1080/29937574.2024.2375494)
 
 These are all Matlab scripts, tested on MATLAB R2023b.
 
