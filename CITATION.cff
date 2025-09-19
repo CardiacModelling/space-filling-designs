@@ -1,0 +1,58 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Space Filling Designs
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Gary
+    family-names: Mirams
+    email: gary.mirams@nottingham.ac.uk
+    orcid: 'https://orcid.org/0000-0002-4569-4312'
+    affiliation: University of Nottingham
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.11103980
+    description: Zenodo link
+repository-code: 'https://github.com/CardiacModelling/space-filling-designs/'
+abstract: >-
+  Code associated with the paper:
+
+  GR Mirams, M Clerx, DG Whittaker, CL Lei (2024)
+
+  Optimal experimental designs for characterising ion
+  channel gating by filling the phase-voltage space of model
+  dynamics
+
+  Mathematics in Medical and Life Sciences 1(1):2375494.
+  doi:10.1080/29937574.2024.2375494
+license: BSD-3-Clause
+commit: c05601b827d202472bbb9259cb82a3240ab95a9c
+version: '1.0'
+date-released: '2024-05-02'
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Mirams
+      given-names: Gary R.
+      orcid: https://orcid.org/0000-0002-4569-4312
+    - family-names: Clerx
+      given-names: Michael
+      orcid: https://orcid.org/0000-0003-4062-3061
+    - family-names: Whittaker
+      given-names: Dominic G.
+      orcid: https://orcid.org/0000-0002-2757-5491
+    - family-names: Lei
+      given-names: Chon Lok
+      orcid: https://orcid.org/0000-0003-0904-554X
+  title: "Optimal experimental designs for characterising ion channel gating by filling the phase-voltage space of model dynamics"
+  year: 2024
+  doi: 10.1080/29937574.2024.2375494
+  url: http://dx.doi.org/10.1080/29937574.2024.2375494
+  journal: "Mathematics in Medical and Life Sciences"
+  volume: 1
+  issue: 1
+  start: 2375494
